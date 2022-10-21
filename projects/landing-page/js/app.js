@@ -22,7 +22,9 @@
  * Define Global Variables
  * 
 */
-
+const sections = Array.from(document.querySelectorAll('section'));
+const myUl = document.getElementById('navbar__list');
+let numberItems= sections.length;
 
 /**
  * End Global Variables
@@ -30,7 +32,41 @@
  * 
 */
 
+function createItems(){
+  for(section of sections ){
+    sectionName = section.getAttribute('data-nav');
+    sectionLink = section.getAttribute('id');
+    // create new item 
+    listItem = document.createElement('li');
+    // add text in item 
+    listItem.innerHTML = `<a class='menu__link' href='#${sectionLink}'>${sectionName}</a>
+    // add listItem in ul 
+    myUl.appendChild(listItem);
+    }
+    }
+    
+// department section in viewport
+function sectionView(element){
+let sectionView = element.getBoundingClientRect();
+return (sectionView.top >= 0);
+}
 
+//gives the section being viewed a diffrent appearance
+function toggleActive(){
+  for(section of sections){
+  // if the section in the viewport 
+  if(sectionView(section)){
+  //if doesn't already contain "active"
+  if(!section.classList.contains('your-active-class')){
+  // add in theme
+  section.classList.add('your-active-class');
+  }
+  } else{
+  //if it is out in viewport then remove the class "your-active-class"
+  section.classList.remove('your-active-class');
+  }
+  }
+  }
 
 /**
  * End Helper Functions
@@ -39,11 +75,11 @@
 */
 
 // build the nav
-
+createItem();
 
 // Add class 'active' to section when near top of viewport
 
-
+document.addEventListener('scroll', toggleActive);
 // Scroll to anchor ID using scrollTO event
 
 
